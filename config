@@ -1,0 +1,10 @@
+endpoint="https://object-store.com"
+bucket_name="bucket-name"
+
+list_file="list.json"
+manifest_file="manifest.json"
+report_file="report.json"
+
+public_html="/home/user/public_html"
+plugin_updater="/home/user/plugin-updater"
+plugins_home="$public_html/wp-content/plugins"
