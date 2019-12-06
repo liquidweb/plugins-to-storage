@@ -20,6 +20,21 @@ for row in $(jq -r '.[] | @base64' $report_file); do
    )
 done
 
+echo "************ Upload Manifest File *********************"
+aws --endpoint=$endpoint s3 cp $manifest_file s3://$bucket_name/$manifest_file
+
+echo "************ Upload Zip Files *************************"
+for row in $(jq -r '.[] | @base64' $report_file); do
+   _jq() {
+     echo ${row} | base64 --decode | jq -r ${1}
+   }
+
+   name=$(_jq '.plugin')
+   zip=".zip"
+
+   aws --endpoint=$endpoint s3 cp $name$zip s3://$bucket_name/$name$zip
+done
+
 echo "************ Cleanup Files *****************************"
 rm $report_file
 rm $manifest_file
