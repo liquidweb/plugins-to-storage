@@ -6,7 +6,7 @@ manifest_file="manifest.json"
 report_file="report.json"
 
 public_html="/home/user/public_html"
-plugin_updater="/home/user/plugin-updater"
+plugin_updater="$(pwd)"
 plugins_home="$public_html/wp-content/plugins"
 
 zip=".zip"
