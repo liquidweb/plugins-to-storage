@@ -58,5 +58,7 @@ for row in $(jq -r '.[] | @base64' $report_file); do
 
    name=$(_jq '.plugin')
    
-   zip $name.zip $plugins_home/$name
+   cd $plugins_home
+   zip -r -q $name.zip $name 
+   mv $name.zip $plugin_updater
 done
