@@ -15,24 +15,19 @@ fun_create () {
 }
 
 fun_read () {
-   read -r -p "See entire[e] file or just one plugin[p]? [e/p] " input
-   case $input in
-     [eE])
-        jq . $report_file
-        ;;
-     [pP])
-        read -r -p "Enter plugin name " name
-        jq -r --arg name "$name" '.[] | select(.plugin==$name)' $report_file
-        ;;
-   esac
+   jq . $report_file
 }
 
 fun_update () {
-   echo "UPDATE"
+   fun_delete
+   fun_create
 }
 
 fun_delete () {
-   echo "DELETE"
+   read -r -p "Enter plugin name " name
+   tmp=$(mktemp)
+   $(jq --arg name $name 'del(.[] | select(.plugin==$name))' \
+        $report_file > "$tmp" && mv "$tmp" $report_file) 
 }
 
 run=true
