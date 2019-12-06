@@ -19,7 +19,6 @@ for row in $(jq -r '.[] | @base64' $list_file); do
    }
 
    name=$(_jq '.name')
-   zip=".zip"
    new_version=$(_jq '.version')
    curr_version=$(jq -r --arg name "$name$zip" '.[] | select(.plugin==$name) | .version' $manifest_file)
 
@@ -59,6 +58,6 @@ for row in $(jq -r '.[] | @base64' $report_file); do
    name=$(_jq '.plugin')
    
    cd $plugins_home
-   zip -r -q $name.zip $name 
-   mv $name.zip $plugin_updater
+   zip -r -q $name$zip $name 
+   mv $name$zip $plugin_updater
 done

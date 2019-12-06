@@ -9,7 +9,6 @@ for row in $(jq -r '.[] | @base64' $report_file); do
    }
 
    name=$(_jq '.plugin')
-   zip=".zip"
    new_version=$(_jq '.new_version')
 
    tmp=$(mktemp)
@@ -30,7 +29,6 @@ for row in $(jq -r '.[] | @base64' $report_file); do
    }
 
    name=$(_jq '.plugin')
-   zip=".zip"
 
    aws --endpoint=$endpoint s3 cp $name$zip s3://$bucket_name/$name$zip
 done
@@ -39,4 +37,4 @@ echo "************ Cleanup Files *****************************"
 rm $report_file
 rm $manifest_file
 rm $list_file
-rm *.zip
+rm *$zip
