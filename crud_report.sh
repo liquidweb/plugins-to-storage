@@ -30,34 +30,43 @@ fun_delete () {
         $report_file > "$tmp" && mv "$tmp" $report_file) 
 }
 
-run=true
-while $run
-do
- read -r -p "Would you like to create, read, update, delete your report? [c/r/u/d] " input
+initial_prompt() {
+   run=true
+   while $run
+   do
+      read -r -p "Would you like to create, read, update, delete your report? [c/r/u/d] " input
 
- case $input in
-     [cC])
-       fun_create
-       run=false
-       ;;
+      case $input in
+           [cC])
+              fun_create
+              run=false
+              ;;
 
-     [rR])
-      fun_read
-      run=false
-      ;;
+           [rR])
+              fun_read
+              run=false
+              ;;
 
-     [uU])
-      fun_update
-      run=false
-      ;;
+           [uU])
+              fun_update
+              run=false
+              ;;
 
-     [dD])
-      fun_delete
-      run=false
-      ;;
+           [dD])
+              fun_delete
+              run=false
+              ;;
 
-     *)
-      echo "Invalid input..."
-      ;;
- esac
-done
+           *)
+              echo "Invalid input..."
+              ;;
+     esac
+   done
+}
+
+if [ ! -f $report_file ]; then
+   echo "$report_file not found!" 1>&2
+   exit 1
+fi
+
+initial_prompt
