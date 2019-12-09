@@ -28,3 +28,26 @@ the plugin directory in the WordPress instance will be zipped and placed on the 
 aws_access_key_id=YOUR AWS ACCESS KEY
 aws_secret_access_key=YOUR AWS SECRET ACCESS KEY
 ```
+3. Modify your [config](./config) file 
+```
+endpoint="https://object-store.com"
+bucket_name="bucket-name"
+
+list_file="list.json"
+manifest_file="manifest.json"
+report_file="report.json"
+
+public_html="/home/user/public_html"
+plugin_updater="$(pwd)"
+plugins_home="$public_html/wp-content/plugins"
+
+zip=".zip"
+```
+4. You'll most likely need to modify `endpoint`, `bucket_name`, and `public_html` variables.
+
+## Usage
+1. In your `~/plugins-to-storage` directory, run the following:
+2. `./generate_report.sh` will create a report with plugins that need updating, along with a `report.json`, `list.json`, `manifest.json`, and all necessary `.zip` files.
+3. You can run `./crud_report.sh` to read and modify your `report.json` file
+4. Run `./update_plugins.sh` in order to upload your zip files and modified `manifest.json` file to object store
+5. The previous call will remove all generated files, but you can run `./cleanup_files.sh` to do the same
